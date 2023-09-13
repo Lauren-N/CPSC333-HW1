@@ -11,18 +11,15 @@ Class: CPSC333
 
 fun main(){
     printInstructions()
-    var list = emptyList<Int>().toMutableList()
-    var i: Int = 0
-    while(i <= 10){
-        list.add(i)
-        if(list.size >= 10){
-            break
-        }
-        i+=1
-    }
-    println(list)
+    val list: MutableList<Int?> = MutableList(10) { null }
 
 }
+
+fun enterNum(list: MutableList<Int?>, num: Int, index: Int): MutableList<Int?>{
+    list.add(index, num)
+    return list
+}
+
 
 fun genRandNum(): Int{
     val number = (0..999).random()
