@@ -5,49 +5,90 @@ Name: Lauren Nguyen
 Date: 09//11/23
 Assignment: HW1 Random Number Ranking game
 Class: CPSC333
+
+I ATTEMPTED BONUS #1
  */
 fun main(){
     printInstructions()
     var input: String
+    var playAgain: String
     var intInput: Int = 0
+    var prevInput: Int = 0
+    var postInput: Int = 0
     var strNum: String
     var checkEnterKey: String
-    var gameMap = mutableMapOf("1" to "-", "2" to "-", "3" to "-",
-        "4" to "-", "5" to "-", "6" to "-",
-        "7" to "-", "8" to "-", "9" to "-", "10" to "-")
+    var checkPrevKey: String
+    var checkPostKey: String
     var num: Int = 0
-    var turnsLeft: Int = 10
-
-    do{
-        println("***************************************************************************************************")
-        println("$turnsLeft turns left!")
-        num = genRandNum()
-        println("Here is your random number: $num")
-        for ((key, value) in gameMap) {
-            println("$key: $value")
-        }
-        println("***************************************************************************************************")
-        println("enter index 1-10 or q to quit! ")
-        input = readln()
-        intInput = input.toInt()
-        if(intInput < 0 || intInput > 10){
+    var post: Int = 0
+    var prev: Int = 0
+    do {
+        var turnsLeft: Int = 10
+        var gameMap = mutableMapOf("1" to "-", "2" to "-", "3" to "-",
+            "4" to "-", "5" to "-", "6" to "-",
+            "7" to "-", "8" to "-", "9" to "-", "10" to "-")
+        do {
             println("***************************************************************************************************")
-            println("\t\t\t\t\t\t\t INPUT INVALID! NUMBER MUST BE WITHIN 1-10")
-            break
-        }
-        checkEnterKey = gameMap.getOrElse(input) { "n/a" }
-
-        if(checkEnterKey != "-"){
+            println("$turnsLeft turns left!")
+            num = genRandNum()
+            println("Here is your random number: $num")
+            for ((key, value) in gameMap) {
+                println("$key: $value")
+            }
             println("***************************************************************************************************")
-            println("\t\t\t INPUT INVALID! CANNOT CHANGE RANKINGS OR PLACE 2 NUMBERS IN ONE INDEX")
-            break
-        }
-        if(input != "q"){
+            println("enter index 1-10 or q to quit! ")
+            input = readln()
+            if(input == "q"){
+                break
+            }
+            intInput = input.toInt()
+            if (intInput < 0 || intInput > 10) {
+                println("***************************************************************************************************")
+                println("\t\t\t\t\t\t\t INPUT INVALID! NUMBER MUST BE WITHIN 1-10")
+                break
+            }
+            checkEnterKey = gameMap.getOrElse(input) { "n/a" }
+            if (checkEnterKey != "-") {
+                println("***************************************************************************************************")
+                println("\t\t\t INPUT INVALID! CANNOT CHANGE RANKINGS OR PLACE 2 NUMBERS IN ONE INDEX")
+                break
+            }
+//            if(intInput in 2..9){
+//                postInput = intInput + 1
+//                post = 1
+//                prevInput = intInput - 1
+//                prev = 1
+//            }
+//            else{
+//                println("***************************************************************************************************")
+//                println("\t\t\t INPUT INVALID! OUT OF RANGE")
+//                break
+//            }
+//            if(prev == 1 && post == 1){
+//                var strPost = postInput.toString()
+//                var strPrev = prevInput.toString()
+//                checkPostKey = gameMap.getOrElse(strPost) { "n/a" }
+//                checkPrevKey = gameMap.getOrElse(strPrev) { "n/a" }
+//                if(checkPostKey != "-"){
+//                    var intPost = checkPostKey.toInt()
+//                }
+//                if(checkPrevKey != "-"){
+//                    var intPrev = checkPrevKey.toInt()
+//
+//                }
+//            }
+//
+//
+//
+
             strNum = num.toString()
             gameMap.put(input, strNum)
-        }
-        turnsLeft -= 1
-    }while(input != "q" && turnsLeft > 0)
+            turnsLeft -= 1
+        } while (turnsLeft > 0)
+
+        println("Want to play again? y for yes and n for no")
+        playAgain = readln()
+    }while(playAgain == "y")
 
     println("\t\t\t\t\t\t\t\t\t\tTHANKS FOR PLAYING!")
 }
