@@ -53,33 +53,32 @@ fun main(){
                 println("\t\t\t INPUT INVALID! CANNOT CHANGE RANKINGS OR PLACE 2 NUMBERS IN ONE INDEX")
                 break
             }
-//            if(intInput in 2..9){
-//                postInput = intInput + 1
-//                post = 1
-//                prevInput = intInput - 1
-//                prev = 1
-//            }
-//            else{
-//                println("***************************************************************************************************")
-//                println("\t\t\t INPUT INVALID! OUT OF RANGE")
-//                break
-//            }
-//            if(prev == 1 && post == 1){
-//                var strPost = postInput.toString()
-//                var strPrev = prevInput.toString()
-//                checkPostKey = gameMap.getOrElse(strPost) { "n/a" }
-//                checkPrevKey = gameMap.getOrElse(strPrev) { "n/a" }
-//                if(checkPostKey != "-"){
-//                    var intPost = checkPostKey.toInt()
-//                }
-//                if(checkPrevKey != "-"){
-//                    var intPrev = checkPrevKey.toInt()
-//
-//                }
-//            }
-//
-//
-//
+
+            if(intInput in 2..9) {
+                postInput = intInput + 1
+                prevInput = intInput - 1
+                var strPost = postInput.toString()
+                var strPrev = prevInput.toString()
+                checkPostKey = gameMap.getOrElse(strPost) { "n/a" }
+                checkPrevKey = gameMap.getOrElse(strPrev) { "n/a" }
+
+                if (checkPostKey != "-") {
+                    var intPost = checkPostKey.toInt()
+                    if (intPost > intInput) {
+                        println("***************************************************************************************************")
+                        println("\t\t\t INPUT INVALID! POST NUM IS BIGGER")
+                        break
+                    }
+                }
+                if (checkPrevKey != "-") {
+                    var intPrev = checkPrevKey.toInt()
+                    if (intPrev > intInput) {
+                        println("***************************************************************************************************")
+                        println("\t\t\t INPUT INVALID! PREV NUM IS BIGGER")
+                        break
+                    }
+                }
+            }
 
             strNum = num.toString()
             gameMap.put(input, strNum)
