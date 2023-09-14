@@ -13,13 +13,10 @@ fun main(){
     var input: String  // string variable to hold user's preferred index
     var playAgain: String // string variable to hold users choice to playing again
     var intInput: Int = 0 // integer version of users choice
-    var prevInput: Int = 0 // integer version of the number above users index
-    var postInput: Int = 0 // integer version of the number under the users index
     var strNum: String // string version of random gen number
     var checkEnterKey: String // string value to hold value assigned to user entered key
-    var checkPrevKey: String // string value to hold value above user entered key
-    var checkPostKey: String // string value to hold value below user entered key
     var num: Int = 0 // randomly generated number
+
     do {
         var turnsLeft: Int = 10 // int to hold turns left by user
         var gameMap = mutableMapOf("1" to "-", "2" to "-", "3" to "-",
@@ -51,36 +48,23 @@ fun main(){
                 println("\t\t\t INPUT INVALID! CANNOT CHANGE RANKINGS OR PLACE 2 NUMBERS IN ONE INDEX")
                 break
             }
-
-            if(intInput in 2..9) { // for indexes 2-9 check error bounds
-                postInput = intInput + 1 // post = one index after user index
-                prevInput = intInput - 1 // pre = one index before user index
-                var strPost = postInput.toString() // converting the value to a string to grab value
-                var strPrev = prevInput.toString() // convertin value to string to grab value
-                checkPostKey = gameMap.getOrElse(strPost) { "n/a" } // getting value after index
-                checkPrevKey = gameMap.getOrElse(strPrev) { "n/a" } // getting value before index
-
-                if (checkPostKey != "-") { // if the value after index is not "-", user has put a number into it -> enter loop
-                    var intPost = checkPostKey.toInt() // change value at index to a int
-                    if (intPost > intInput) { // if the integer version of the value at index after is bigger then ranomly gen number user tried to place -> enter if and break loop
-                        println("***************************************************************************************************")
-                        println("\t\t\t INPUT INVALID! POST NUM IS BIGGER")
-                        break
-                    }
-                }
-                if (checkPrevKey != "-") { // if the value before index is not "-", user has put a number into it -> enter loop
-                    var intPrev = checkPrevKey.toInt() // if the integer version of the value at index before is bigger then ranomly gen number user tried to place -> enter if and break loop
-                    if (intPrev > intInput) {
-                        println("***************************************************************************************************")
-                        println("\t\t\t INPUT INVALID! PREV NUM IS BIGGER")
-                        break
-                    }
-                }
-            }
 //          IF ALL CONDITIONS PASS:
             strNum = num.toString() // turn the randomly generated number to a string from an int
             gameMap.put(input, strNum) // enter the string num into map wwith user indicated index
             turnsLeft -= 1 // decrement turns left
+
+            var list = mutableListOf<Int>() // list to hold all nums entered in map so far
+            for ((key, value) in gameMap) { // adding all values in the map to the list
+                if (value != "-"){ // grabbing only the numbers
+                var intVal: Int = value.toInt() // turning the string to a int
+                list.add(intVal) // adding to list
+                }
+            }
+            if(!isSorted(list)){ // if sorted function returns false -> break loop
+                println("***************************************************************************************************")
+                println("\t\t\t\t\t\t\t INPUT INVALID! NUMBER MUST IN ASCENDING ORDER")
+                break
+            }
         } while (turnsLeft > 0) // loop until turns left is at 0
 
         println("Want to play again? y for yes and n for no") // ask if user wants to play again
@@ -88,6 +72,17 @@ fun main(){
     }while(playAgain == "y") // if playAgain is "y" restart the loops
 
     println("\t\t\t\t\t\t\t\t\t\tTHANKS FOR PLAYING!") // thank you message
+}
+
+fun isSorted(list: MutableList<Int>): Boolean{ // takes in a list and checks if it is sorted in ascending order
+    var i: Int = 0 // indexer
+    var sorted: Boolean = true // boolean to return
+    for(i in 0..<list.size-1){ // index from beginning of list to the second to last item
+        if(list[i] > list[i+1]){ // if number at one index is greater then the number at the next index, set sorted to be false
+            sorted = false
+        }
+    }
+    return sorted // return sorted
 }
 
 fun genRandNum(): Int{ // function to generate one random number and returns it
